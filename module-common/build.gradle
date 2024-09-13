@@ -11,6 +11,7 @@ version = '0.0.1-SNAPSHOT'
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(11)
+        vendor = JvmVendorSpec.AMAZON
     }
 }
 
@@ -39,3 +40,12 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+tasks.bootJar { enabled = false }
+tasks.jar { enabled = true }
+
+// xxx.jar
+// xxx-plain.jar -> dependency 없음
+// java -jar xxx.jar
+
+// ./gradlew clean :module-api:buildNeeded --stacktrace --info --refresh-dependencies -x test
