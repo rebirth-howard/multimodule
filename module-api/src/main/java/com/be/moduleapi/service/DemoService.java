@@ -1,7 +1,9 @@
 package com.be.moduleapi.service;
 
 import com.be.moduleapi.exception.CustomException;
+import com.be.modulecommon.domain.Member;
 import com.be.modulecommon.enums.CodeEnum;
+import com.be.modulecommon.repositories.MemberRepository;
 import com.be.modulecommon.service.CommonDemoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,13 +14,18 @@ public class DemoService {
 
     private final CommonDemoService commonDemoService;
 
+    private final MemberRepository memberRepository;
+
     public String save() {
-        System.out.println(CodeEnum.SUCCESS.getCode());
-        System.out.println(commonDemoService.commonService());
+        memberRepository.save(Member.builder()
+                .name(Thread.currentThread().getName())
+                .build());
         return "save";
     }
 
     public String find() {
+        int size = memberRepository.findAll().size();
+        System.out.println("DB size : " + size);
         return "find";
     }
 
